@@ -3,5 +3,5 @@ from django.shortcuts import render
 # Create your views here.
 
 
-def home(response):
-    return render(response, "home.html", {"name": "TEST"})
+def base(response):
+    return render(response, "base.html", {"name": "TEST"})
