@@ -9,8 +9,13 @@
 
     <nav>
       <div>
-          <h3><a href="/home_page">Conference Rooms</a></h3>
-          <p><a href="/add">Add NEW Conference Room</a></p>
+          <h3>Conference Rooms</h3>
+          <ul>
+              {% for room in rooms %}
+              <li><a href="/{{ room.name }}"> {{ room.name }} </a></li>
+              {% endfor %}
+          </ul>
+          <p><a href="/add">+ add</a></p>
       </div>
     </nav>
 
