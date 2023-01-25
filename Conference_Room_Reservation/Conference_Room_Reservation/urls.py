@@ -19,5 +19,6 @@ from Reservation_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('base/', views.base, name='base')
+    path('home/', views.Base, name='base'),
+    path('room/new/', views.AddRoom, name='adding')
 ]

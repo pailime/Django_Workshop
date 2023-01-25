@@ -4,23 +4,45 @@
     <meta charset="UTF-8">
     <title>Reservation</title>
 </head>
+
 <body>
-    <h2 align="center">Conference Room Booking System</h2>
+<!-- Nav --->
+<h2 align="center">Conference Room Booking System</h2>
+<nav>
+    <div>
+        <h3>Conference Rooms</h3>
+        <ul>
+            {% for room in rooms %}
+            <li><a href="/room/<int:id>">Room Name: {{ room.name }} </a>
+                <ul>
+                    <li>Room Capacity: {{ room.capacity }}</li>
+                    <li>Projector Availability:
+                        {% if room.projector_availability %}
+                        YES
+                        {% else %}
+                        NO
+                        {% endif %}</li>
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+        <p><a href="/room/new/">+ add</a></p>
+    </div>
+</nav>
+<!-- Nav --->
 
-    <nav>
-      <div>
-          <h3>Conference Rooms</h3>
-          <ul>
-              {% for room in rooms %}
-              <li><a href="/{{ room.name }}"> {{ room.name }} </a></li>
-              {% endfor %}
-          </ul>
-          <p><a href="/add">+ add</a></p>
+<br>
+<br>
+<br>
+<br>
+
+<!-- Footer --->
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">Author: Emilia Pałczyk</span>
       </div>
-    </nav>
+</footer>
+<!-- Footer --->
 
-    <footer>
-        <p>Author: Emilia Pałczyk</p>
-    </footer>
 </body>
 </html>
