@@ -11,7 +11,7 @@
 <nav>
     <div>
         <h3><a href="/home_page">Conference Rooms</a></h3>
-        <p><a href="/room/new/">+ add New Room</a></p>
+        <p><a href="/room/new/">+ ADD New Room</a></p>
     </div>
 </nav>
 <!-- Nav --->
@@ -21,23 +21,25 @@
     {% csrf_token %}
     <div>
         <label for="room_name">Room name</label>
-        <input type="text" id="room_name" placeholder="Room name" name="room_name">
+        <input type="text" id="room_name" placeholder="Room name" name="room_name" value="{{ room.name }}">
     </div>
     <div>
         <label for="capacity">Room Capacity</label>
-        <input type="number" step="1" id="capacity" placeholder="Room capacity" name="room_capacity">
+        <input type="number" step="1" id="capacity" placeholder="Room capacity" name="room_capacity" value="{{ room.capacity }}">
     </div>
     <div>
         <label class="form-check-label" for="projector">Projector availability</label>
-        <input type="checkbox" name="projector" id="projector">
+        <input type="checkbox" name="projector" id="projector" value="{{ room.projector_availability }}">
     </div><br><br>
-    <button type="submit">Add a room</button>
+    <button type="submit"><a href="/home_page">Modify room</a></button>
 </form>
 <!-- Form --->
+
 <br>
 <br>
 <br>
 <br>
+
 <!-- Footer --->
 <footer class="footer">
       <div class="container">

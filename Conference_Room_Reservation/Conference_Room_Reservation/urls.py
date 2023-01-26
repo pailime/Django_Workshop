@@ -20,5 +20,10 @@ from Reservation_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.Base, name='base'),
-    path('room/new/', views.AddRoom, name='adding')
+    path('home_page/', views.HomePage, name='home'),
+    path('room/new/', views.AddRoom, name='adding'),
+    # path('room/<int:id>', views.RoomDetails, name='details'),
+    path('room/modify/<int:id>', views.Modify, name='modify'),
+    path('room/delete/<int:id>', views.Delete, name='delete'),
+    # path('room/reserve/<int:id>', views.Reserve, name='reserve'),
 ]
