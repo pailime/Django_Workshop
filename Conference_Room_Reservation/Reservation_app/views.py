@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from Reservation_app.models import ConferenceRoom
 
 # Create your views here.
@@ -82,7 +82,7 @@ def Modify(request, id):
         room_name = request.POST.get("room_name")
         room_capacity = request.POST.get("room_capacity")
         room_capacity = int(room_capacity) if room_capacity else 0
-        projector = request.POST.get("projector") == 'on'
+        projector = True if request.POST.get("projector") == 'on' else False
         if not room_name:
             return render(
                 request,
@@ -107,10 +107,6 @@ def Modify(request, id):
         room.projector_availability = projector
         room.save()
 
-        return render(
-            request,
-            'home_page.html',
-            context={'room': room}
-        )
+        return HttpResponseRedirect(reverse('home'))
 
 
