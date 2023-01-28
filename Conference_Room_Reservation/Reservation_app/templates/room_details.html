@@ -11,15 +11,24 @@
 <nav>
     <div>
         <h3><a href="/home_page">Conference Rooms</a></h3>
+        <h3>Room Name: {{ room.name }}</h3>
+                <ul>
+                    <li>Room Capacity: {{ room.capacity }}</li>
+                    <li>Projector Availability:
+                        {% if room.projector_availability %}
+                        YES
+                        {% else %}
+                        NO
+                        {% endif %}</li>
+                </ul>
+        <h3>Booking</h3>
         <ul>
-            {% for room in rooms %}
-            <li><a href="/room/<int:id>">Room Name: {{ room.name }} </a></li>
-                {% if room.reserved %}
-                <p>Availability: booked</p>
-                {% else %}
-                <p>Availability: free</p>
-                {% endif %}
-            {% endfor %}
+        {% for reserve in reservation %}
+            <li><p>{{ reserve.date }}</p></li>
+                <ul>
+                    <li>{{ reserve.comment }}</li>
+                </ul>
+        {% endfor %}
         </ul>
         <ul>
             <li><a href="/room/modify/<int:id>">modify</a></li>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation</title>
+</head>
+
+<body>
+<!-- Nav --->
+<h2 align="center">Conference Room Booking System</h2>
+<nav>
+    <div>
+        <h3><a href="/home_page">Conference Rooms</a></h3>
+        <h2>Room Reservation:  {{ room.name }}</h2>
+    </div>
+</nav>
+<!-- Nav --->
+
+<!-- Form --->
+<form action="" method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="reserve_date">Booking date:</label>
+        <input type="date" id="reserve_date"  name="reserve_date" max="3000-12-31" min="1000-01-01">
+    </div>
+    <div>
+        <label for="reserve_comment">Comment:</label>
+        <textarea id="reserve_comment" name="reserve_comment"></textarea>
+    </div>
+    <br><br>
+    <button type="submit">Book</button>
+</form>
+<!-- Form --->
+
+<br>
+<br>
+<br>
+<br>
+
+<!-- Footer --->
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">Author: Emilia Pałczyk</span>
+      </div>
+</footer>
+<!-- Footer --->
+
+</body>
+</html>

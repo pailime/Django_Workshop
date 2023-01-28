@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from Reservation_app.models import ConferenceRoom
+from Reservation_app.models import ConferenceRoom, RoomReservation
+import datetime
 
 # Create your views here.
 
 
-def Base(request):
+def base(request):
     rooms = ConferenceRoom.objects.all()
     return render(
         request,
@@ -13,16 +14,19 @@ def Base(request):
     )
 
 
-def HomePage(request):
+def homepage(request):
     rooms = ConferenceRoom.objects.all()
+    for room in rooms:
+        reservation_dates = [reserve.date for reserve in room.roomreservation_set.all()]
+        room.reserved = datetime.date.today() in reservation_dates
     return render(
         request,
         'home_page.html',
-        context={'rooms': rooms}
+        context={'rooms': rooms,}
     )
 
 
-def AddRoom(request):
+def addroom(request):
     rooms = ConferenceRoom.objects.all()
     if request.method == "GET":
         return render(
@@ -62,14 +66,14 @@ def AddRoom(request):
         )
 
 
-def Delete(request, id):
+def delete(request, id):
     if request.method == "GET":
         room = ConferenceRoom.objects.get(id=id)
         room.delete()
         return redirect('home_page')
 
 
-def Modify(request, id):
+def modify(request, id):
     room = ConferenceRoom.objects.get(id=id)
     if request.method == "GET":
         return render(
@@ -108,5 +112,52 @@ def Modify(request, id):
         room.save()
 
         return redirect('home')
+
+
+def reserve(request, id):
+    room_reserve = RoomReservation.objects.all()
+    room_id = ConferenceRoom.objects.get(id=id)
+    if request.method == 'GET':
+        return render(
+            request,
+            'reserve.html',
+            context={'room_reserve': room_reserve, 'room_id': room_id}
+        )
+    elif request.method == 'POST':
+        reserve_date = request.POST.get('reserve_date')
+        reserve_comment = request.POST.get('reserve_comment')
+        reservation = room_id.roomreservation_set.filter(date__gte=str(datetime.date.today())).order_by('date')
+
+        if RoomReservation.objects.filter(room_id=room_id, date=reserve_date):
+            return render(
+                request,
+                'reserve.html',
+                context={'room_id': room_id,
+                         'reservation': reservation,
+                         'error': "Room id already booked"}
+            )
+        elif reserve_date < str(datetime.date.today()):
+            return render(
+                request,
+                'reserve.html',
+                context={'room_id': room_id,
+                         'reservation': reservation,
+                         'error': "You entered a date in the past"}
+            )
+
+        RoomReservation.objects.create(date=reserve_date, room_id=room_id, comment=reserve_comment)
+        return redirect('home')
+
+
+def roomdetails(request, room_id):
+    room = ConferenceRoom.objects.get(id=room_id)
+    #room = ConferenceRoom.objects.all()
+    reservation = room.roomreservation_set.filter(date__gte=str(datetime.date.today())).order_by('date')
+    if request.method == 'GET':
+        return render(
+            request,
+            'room_details.html',
+            context={'room': room, 'reservation': reservation}
+        )
 
 
